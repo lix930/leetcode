@@ -169,3 +169,81 @@ public int[] intersect(int[] nums1, int[] nums2) {
     return retResult;
 }
 ```
+
+
+## 242. Valid Anagram
+Given two strings *s* and *t*, write a function to determine if *t* is an anagram of *s*.
+
+For example,
+*s* = "anagram", *t* = "nagaram", return true.
+*s* = "rat", *t* = "car", return false.
+
+**Note:**
+You may assume the string contains only lowercase alphabets.
+
+**Follow up:**
+What if the inputs contain unicode characters? How would you adapt your solution to such case?
+
+solution:  用一个哈希表记录字符个数，对比另一个字符串，如果不同则false
+
+```java
+public boolean isAnagram(String s, String t) {
+    Map<Character, Integer> map = new HashMap<>();
+    char[] sChar = s.toCharArray();
+    char[] tChar = t.toCharArray();
+    if (sChar.length != tChar.length)
+        return false;
+    for(int i = 0; i < sChar.length; i++){
+        if(map.containsKey(sChar[i]))
+            map.put(sChar[i], map.get(sChar[i]) + 1);
+        else
+            map.put(sChar[i], 1);
+    }
+    
+    for(int i = 0; i < tChar.length; i++){
+        if(map.containsKey(tChar[i]))
+            map.put(tChar[i], map.get(tChar[i]) - 1);
+    }
+    
+    for(Character c : map.keySet()){
+        if(map.get(c) != 0)
+            return false;
+    }
+    return true;
+    
+}
+```
+
+
+
+##  102. Happy Number
+
+
+Write an algorithm to determine if a number is "happy".
+
+A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.
+
+**Example: **19 is a happy number
+
+- 12 + 92 = 82
+- 82 + 22 = 68
+- 62 + 82 = 100
+- 12 + 02 + 02 = 1
+
+solution：
+
+```java
+public boolean isHappy(int n) {
+    int num = 0;
+    while(n >=10 ) {
+        int sum = 0;
+        while(n != 0 ){
+           num = n % 10;
+           sum = sum + num * num;
+           n = n / 10;
+        }
+        n = sum;
+    }
+    return n==1 || n==7;
+}
+```
