@@ -89,3 +89,54 @@ public class Solution {
     }
 }
 ```
+## 21. Merge Two Sorted Lists
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+solution: 
+
+递归方法： 也就是归并排序的合并部分。
+
+```java
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    if(l1 == null)
+        return l2;
+    if(l2 == null)
+        return l1;
+    if( l1.val < l2.val){
+        l1.next = mergeTwoLists(l1.next, l2);
+        return l1;
+    }else{
+        l2.next = mergeTwoLists(l1, l2.next);
+        return l2;
+    }
+}
+```
+遍历方法：新建一个表头，然后遍历两个链表，把最小的取出来。
+
+```java
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    if(l1 == null && l2 == null)
+        return null;
+    if(l1 == null)
+        return l2;
+    if(l2 == null)
+        return l1;
+    ListNode newHead = new ListNode(0);
+    ListNode cur = newHead;
+    while(l1 != null && l2 != null){
+        if(l1.val <= l2.val){
+            cur.next = l1;
+            l1 = l1.next;
+        }else{
+            cur.next = l2;
+            l2 = l2.next;
+        }
+        cur = cur.next;
+    }
+    if (l1 == null)
+        cur.next = l2;
+    if (l2 == null)
+        cur.next = l1;
+    return newHead.next;
+}
+```
