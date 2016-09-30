@@ -140,3 +140,25 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     return newHead.next;
 }
 ```
+## 83. Remove Duplicates from Sorted List
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+For example,
+Given `1->1->2`, return `1->2`.
+Given `1->1->2->3->3`, return `1->2->3`.
+solution: 遍历链表如果当前节点与next节点值相同，则cur.next = cur.next.next, 否则 cur = cur.next;
+```java
+public ListNode deleteDuplicates(ListNode head) {
+        ListNode cur = head;
+        while(cur != null){
+            if (cur.next == null)
+                break;
+            if(cur.val == cur.next.val){
+                cur.next = cur.next.next;
+            }else{
+                cur = cur.next;
+            }
+        }
+        return head;
+    }
+```
