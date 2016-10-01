@@ -231,3 +231,38 @@ public boolean hasCycle(ListNode head) {
         return false;
     }
 ```
+
+
+## 19. Remove Nth Node From End of List
+Given a linked list, remove the nth node from the end of list and return its head.
+
+For example,
+```
+   Given linked list: 1->2->3->4->5, and n = 2.
+
+   After removing the second node from the end, the linked list becomes 1->2->3->5.
+```
+**Note**:
+Given n will always be valid.
+Try to do this in one pass.
+
+solution: 这是一个快慢指针路程的问题，设置一个slowNode, fastNode,用fastNode遍历链表,每次遍历fastNode后移一位，n--,当n<=0时 slowNode后移一位。
+slowNode找到倒数第n个结点后，进行删除操作。
+
+```java
+public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode newHead = new ListNode(-1);
+        newHead.next = head;
+        ListNode slowNode = newHead;
+        ListNode fastNode = newHead;
+        while(fastNode.next != null){
+            if(n <= 0)
+                slowNode = slowNode.next;
+            fastNode = fastNode.next;
+            n--;
+        }
+        if(slowNode.next != null)
+            slowNode.next = slowNode.next.next;
+        return newHead.next;
+    }
+```
