@@ -201,11 +201,33 @@ public ListNode swapPairs(ListNode head) {
         //if the below is not done dummy->1;
         temp.next = two;
         // temp was pointing to dummy
-        //temp->1 
+        //temp->1
         temp = one;
-        
-        // now { dummy->2->1->3->4 } 
-        
+        // now { dummy->2->1->3->4 }
     }
     return newhead.next;
+```
+
+## 141. Linked List Cycle
+Given a linked list, determine if it has a cycle in it.
+
+Follow up:
+Can you solve it without using extra space?
+
+solution: 设置两个指针 slow, fast, slow每次走一步，fast每次走两步。
+如果某个时刻 slow==fast 则说明 链表有环
+```java
+public boolean hasCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        if (head == null)
+            return false;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast)
+                return true;
+        }
+        return false;
+    }
 ```
