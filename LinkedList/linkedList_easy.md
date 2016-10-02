@@ -266,3 +266,65 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
         return newHead.next;
     }
 ```
+## 160. Intersection of Two Linked Lists
+
+Write a program to find the node at which the intersection of two singly linked lists begins.
+
+For example, the following two linked lists:
+
+```
+A:          a1 → a2
+                   ↘
+                     c1 → c2 → c3
+                   ↗            
+B:     b1 → b2 → b3
+
+```
+
+begin to intersect at node c1.
+
+**Notes:**
+
+- If the two linked lists have no intersection at all, return `null`.
+- The linked lists must retain their original structure after the function returns.
+- You may assume there are no cycles anywhere in the entire linked structure.
+- Your code should preferably run in O(n) time and use only O(1) memory.
+
+**solution**: 可以记录两个链表的长度，用lenA-lenB（即 6-5 = 1） 得到交点前的offset，将长的链表置于offset处（即b2处），然后p1,p2一起后移，直到p1==p2, 返回交点p1（即c1）,如果没有交点 则返回null.
+
+
+
+```java
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    if(headA == null || headB == null) //边界条件
+        return null;
+    //计算长度
+    int lenA = length(headA);
+    int lenB = length(headB);
+    //偏置
+    while(lenA > lenB){
+        headA = headA.next;
+        lenA--;
+    }
+    while(lenA < lenB){
+        headB = headB.next;
+        lenB--;
+    }
+    // 找出交点 如果没交点 headA 为null
+    while(headA != headB){
+        headA = headA.next;
+        headB = headB.next;
+    }
+    return headA;
+    
+}
+
+private int length(ListNode head){
+    int length = 0;
+    while(head != null){
+        head = head.next;
+        length++;
+    }
+    return length;
+}
+```
