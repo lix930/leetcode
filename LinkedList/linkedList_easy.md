@@ -328,3 +328,28 @@ private int length(ListNode head){
     return length;
 }
 ```
+## 203. Remove Linked List Elements
+
+Remove all elements from a linked list of integers that have value **val**.
+
+**Example**
+**\*Given:*** 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, **val** = 6
+**\*Return:*** 1 --> 2 --> 3 --> 4 --> 5
+
+solution：设置一个dummy头结点，然后遍历链表，有当cur.next.val == val 时，cur.next = cur.next.next, 否则cur = cur.next,
+```java
+public ListNode removeElements(ListNode head, int val) {
+        if( head == null )
+            return null;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode cur = dummy;
+        while(cur.next != null){
+            if(cur.next.val == val)
+                cur.next = cur.next.next;
+            else
+                cur = cur.next;
+        }
+        return dummy.next;
+    }
+```
