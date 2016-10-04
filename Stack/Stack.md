@@ -56,4 +56,82 @@ class MyQueue {
 ```
 
 
+## 225. Implement Stack using Queues
+Implement the following operations of a stack using queues.
 
+- push(x) -- Push element x onto stack.
+- pop() -- Removes the element on top of the stack.
+- top() -- Get the top element.
+- empty() -- Return whether the stack is empty.
+
+Notes:
+
+- You must use *only* standard operations of a queue -- which means only `push to back`, `peek/pop from front`, `size`, and `is empty` operations are valid.
+- Depending on your language, queue may not be supported natively. You may simulate a queue by using a list or deque (double-ended queue), as long as you use only standard operations of a queue.
+- You may assume that all operations are valid (for example, no pop or top operations will be called on an empty stack).
+
+solution: 使用两个queue,
+
+- push(x) 时 
+
+  ​	size==0时，任选一个队列
+
+  ​	size!=0时，选择一个不为空的队列
+
+- pop() 与 top() 
+
+  ​	两个队列来回倒腾 
+
+  ​	最后一个元素特殊处理(把前面的元素都移动到另一个queue,在执行pop或top)
+
+
+
+```java
+class MyStack {
+    Queue<Integer> queue1 = new LinkedList<Integer>();
+    Queue<Integer> queue2 = new LinkedList<Integer>();
+
+    public void push(int x) {
+        if(!queue1.isEmpty())
+            queue1.offer(x);
+        else
+            queue2.offer(x);
+    }
+	//主要是来回倒腾
+    public void pop() {
+        if(!queue1.isEmpty()){
+           while(queue1.size()>1){
+               queue2.offer(queue1.poll());
+           } 
+           queue1.poll();
+        }else{
+            while(queue2.size()>1){ //队尾前 的元素都移到另一个队列
+               queue1.offer(queue2.poll());
+           } 
+           queue2.poll();
+        }
+    }
+
+    public int top() {
+        if(!queue1.isEmpty()){
+           while(queue1.size()>1){
+               queue2.offer(queue1.poll());
+           } 
+           int k = queue1.poll(); //记录值
+           queue2.offer(k); //移动到另一个队列
+           return k;
+        }else{
+            while(queue2.size()>1){
+               queue1.offer(queue2.poll());
+           } 
+           int k = queue2.poll();
+           queue1.offer(k);
+           return k;
+        }
+    }
+
+    public boolean empty() {
+        return queue1.isEmpty() && queue2.isEmpty();
+    }
+}
+```
