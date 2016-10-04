@@ -353,3 +353,83 @@ public ListNode removeElements(ListNode head, int val) {
         return dummy.next;
     }
 ```
+
+
+## 234. Palindrome(回文) Linked List
+
+Given a singly linked list, determine if it is a palindrome.
+
+**solution**: 比较 右半边链表的反转 和 左半边链表。
+
+举个栗子 `[1, 1, 2, 1]`.
+
+设置 `fast` 和 `slow` 指向`head`.
+
+```
+1 -> 1 -> 2 -> 1 -> null 
+sf
+
+```
+
+(1) **移动:** `fast`移动到最后,  `slow` 移动到中间.
+
+```
+1 -> 1 -> 2 -> 1 -> null 
+          s          f
+```
+
+(2) **反转:** 反转右半边的链表, 然后`slow` 指向第二部分的头.
+
+```
+1 -> 1    null <- 2 <- 1           
+h                      s
+
+```
+
+(3) **比较:** 同时移动并比较 `head` 和`slow` .
+
+```
+1 -> 1    null <- 2 <- 1             
+     h            s
+
+```
+
+最后, 判断 `slow == null`. 在本例中, 因为 `slow != null`, 所以return `false`.
+
+
+
+```java
+public boolean isPalindrome(ListNode head) {
+    ListNode fast = head;
+    ListNode slow = head;
+    //找到链表的中间节点。
+    while(fast != null && fast.next != null) {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+    //slow为右半边链表反转后的头指针
+    slow = reverse(slow);
+    //判断 
+    while(slow != null && head.val == slow.val) {
+        head = head.next;
+        slow = slow.next;
+    }
+    return slow == null;
+}
+    
+private ListNode reverse(ListNode head) {
+    if(head == null ) return head;
+    ListNode prev = head;
+    ListNode cur = head.next;
+    ListNode next = null;
+    while(cur != null) {
+        next = cur.next;
+        cur.next = prev;
+        prev = cur;
+        cur = next;
+    }
+    //清除head的环
+    head.next = null;
+    return prev;
+}
+```
