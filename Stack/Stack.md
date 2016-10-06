@@ -174,7 +174,7 @@ public class MinStack {
         if(minStack.isEmpty()){ //minStack为空时，push到两个栈
             stack.push(x);
             minStack.push(x);
-        }else{ //minStack不为空时，minStack入栈x与min较小的值。
+        }else{ //minStack不为空时，minStack入栈（x与min）中较小的值。
             stack.push(x);
             int min = minStack.peek();
             minStack.push(Math.min(min, x));
