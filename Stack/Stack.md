@@ -135,3 +135,65 @@ class MyStack {
     }
 }
 ```
+## 155. Min Stack
+
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+- push(x) -- Push element x onto stack.
+- pop() -- Removes the element on top of the stack.
+- top() -- Get the top element.
+- getMin() -- Retrieve the minimum element in the stack.
+
+**Example:**
+
+```
+MinStack minStack = new MinStack();
+minStack.push(-2);
+minStack.push(0);
+minStack.push(-3);
+minStack.getMin();   --> Returns -3.
+minStack.pop();
+minStack.top();      --> Returns 0.
+minStack.getMin();   --> Returns -2.
+```
+solution: 
+
+1. 使用两个栈，一个栈存储最小值。
+
+
+
+```java
+public class MinStack {
+    Stack<Integer> stack = new Stack<Integer>();
+    Stack<Integer> minStack = new Stack<Integer>();
+    public MinStack() {
+
+    }
+
+    public void push(int x) {
+        if(minStack.isEmpty()){ //minStack为空时，push到两个栈
+            stack.push(x);
+            minStack.push(x);
+        }else{ //minStack不为空时，minStack入栈x与min较小的值。
+            stack.push(x);
+            int min = minStack.peek();
+            minStack.push(Math.min(min, x));
+        }
+    }
+
+    public void pop() {
+        stack.pop();
+        minStack.pop();
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return minStack.peek();
+    }
+}
+```
+
+
