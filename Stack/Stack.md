@@ -197,3 +197,112 @@ public class MinStack {
 ```
 
 
+
+##  判断入栈，出栈序列是否正确
+
+```java
+public boolean checkValid(Integer[] pushSequence, Integer[] popSequence) {
+	Stack<Integer> stack = new Stack<Integer>();	
+	int i = 0; // push pointer
+	for (Integer k : popSequence) { // 遍历弹栈序列
+		if (!stack.isEmpty() && stack.peek().equals(k)) { 
+            // 如果当前元素和栈顶元素相等，则stack.pop();
+			stack.pop();
+		} else {
+			while (true) {
+				//如果 指针越界，则说明弹栈序列不合法，返回false
+				if (i >= pushSequence.length) {
+					return false;
+				}
+				//依次压栈 ，直到两个序列的 当前元素相等
+				if (pushSequence[i].equals(k)) {
+					i++;
+					break;
+				} else {
+					stack.push(pushSequence[i]);
+					i++;
+				}
+			}
+		}
+	}
+	//最终如果没有返回false，说明弹栈序列正确。
+	return true;
+}
+```
+
+
+## 20. Valid Parentheses
+Given a string containing just the characters `'('`, `')'`, `'{'`, `'}'`, `'['` and `']'`, determine if the input string is valid.
+
+The brackets must close in the correct order, `"()"` and `"()[]{}"` are all valid but `"(]"` and `"([)]"` are not.        
+
+solution: 遇到左括号进栈， 遇到右括号，如果不会空则出栈，对比匹配情况
+
+```java
+public boolean isValid(String s) {
+    Stack<Character> stack = new Stack<Character>();
+    for(char x : s.toCharArray()){
+        if(x == '(') stack.push(')');
+        if(x == '[') stack.push(']');
+        if(x == '{') stack.push('}');
+        
+        if(x == ')' || x == ']' || x == '}'){
+            if(stack.isEmpty())  // 栈为空 返回false
+                return false;
+            if(x == stack.peek()) //如果匹配 则弹栈
+                stack.pop();
+            else 
+                return false; //不匹配 返回false
+        }
+    }
+    if(stack.isEmpty()) //栈为空 说明全都匹配
+        return true;
+    else
+        return false; 
+}
+```
+
+
+
+## 71. Simplify Path
+Given an absolute path for a file (Unix-style), simplify it.
+
+For example,
+**path** = `"/home/"`, => `"/home"`
+**path** = `"/a/./b/../../c/"`, => `"/c"`
+
+**Corner Cases:**Did you consider the case where **path** = `"/../"`?
+In this case, you should return `"/"`.Another corner case is the path might contain multiple slashes `'/'` together, such as `"/home//foo/"`.
+In this case, you should ignore redundant slashes and return `"/home/foo"`.
+
+solution： 将路径以"/"分开，跳过".", "//",""，如果为".."则弹栈，其余的压栈。
+
+最后将栈逆序，并按路径格式输出。
+
+```java
+public String simplifyPath(String path) {
+    LinkedList<String> stack = new LinkedList<String>();
+    String[] str = path.split("/");
+    for(String x : str){
+        if(".".equals(x) || "".equals(x))
+            continue;
+        if("..".equals(x)){
+            if(!stack.isEmpty())
+                stack.pop();
+        }
+        else
+            stack.push(x);    
+    }
+    if(stack.isEmpty())
+        return "/";
+    else{
+        Collections.reverse(stack);
+        StringBuilder sb = new StringBuilder();
+        while(!stack.isEmpty()){
+            sb.append("/").append(stack.pop());
+        }
+        return sb.toString();
+    }
+    
+}
+```
