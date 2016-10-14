@@ -83,6 +83,8 @@ int missingNumber(vector<int>& nums) {
 
 #### `|` tricks
 
+
+
 Keep as many 1-bits as possible
 
 Find the largest power of 2 (most significant bit in binary form), which is less than or equal to the given number N.
