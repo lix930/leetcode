@@ -51,7 +51,6 @@ Consider the following matrix:
   [10, 11, 16, 20],
   [23, 30, 34, 50]
 ]
-
 ```
 
 Given **target** = `3`, return `true`.
@@ -88,3 +87,49 @@ public boolean searchMatrix(int[][] matrix, int target) {
 ## 140. Search a 2D Matrix II
 
 与上一题解法一样
+
+## 153. Find Minimum in Rotated Sorted Array
+
+Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+
+(i.e., `0 1 2 4 5 6 7` might become `4 5 6 7 0 1 2`).
+
+Find the minimum element.
+
+You may assume no duplicate exists in the array.
+
+solution:
+
+首先处理边界条件，然后考虑一下条件
+
+1. 如果rotate了，nums[min] < a[min - 1]
+
+2. 如果没有，最小为nums[0]
+
+   然后用二分查找
+
+```java
+public int findMin(int[] nums) {
+    if(nums == null || nums.length == 0)
+        return 0;
+    else{
+        if(nums.length == 1)
+            return nums[0];
+        int start = 0;
+        int end = nums.length - 1;
+        int mid;
+        while(start < end){
+            mid = (start + end) >>> 1;
+            if (mid > 0 && nums[mid] < nums[mid - 1]) {
+                return nums[mid];
+            }
+            if (nums[start] <= nums[mid] && nums[mid] > nums[end]) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        return nums[start];
+    }
+}
+```
