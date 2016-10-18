@@ -133,3 +133,46 @@ public int findMin(int[] nums) {
     }
 }
 ```
+
+
+
+## 162. Find Peak Element
+
+A peak element is an element that is greater than its neighbors.
+
+Given an input array where `num[i] ≠ num[i+1]`, find a peak element and return its index.
+
+The array may contain multiple peaks, in that case return the index to any one of the peaks is fine.
+
+You may imagine that `num[-1] = num[n] = -∞`.
+
+For example, in array `[1, 2, 3, 1]`, 3 is a peak element and your function should return the index number 2.
+
+**Note:**Your solution should be in logarithmic complexity.
+
+solution：
+
+1. 遍历查找
+2.  二分查找
+
+```java
+public int findPeakElement(int[] nums) {
+    if(nums == null || nums.length == 0)
+        return 0;
+    else{
+        int i;
+        if(nums.length==1)
+            return 0;
+        if(nums[0]>nums[1])  //首
+            return 0;
+        for(i = 1; i < nums.length - 1; i++){
+            if((nums[i] > nums[i-1]) && (nums[i] > nums[i+1])) //找到极大值
+                return i;
+        }
+        if(nums[nums.length-1] > nums[nums.length-2]){ //尾
+            return nums.length-1;
+        }
+        return 0;
+    }
+}
+```
