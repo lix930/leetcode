@@ -153,7 +153,7 @@ For example, in array `[1, 2, 3, 1]`, 3 is a peak element and your function sho
 solution：
 
 1. 遍历查找
-2.  二分查找
+2. 二分查找
 
 ```java
 public int findPeakElement(int[] nums) {
@@ -173,6 +173,43 @@ public int findPeakElement(int[] nums) {
             return nums.length-1;
         }
         return 0;
+    }
+}
+```
+
+
+## 50. Pow(x, n)
+Implement pow(x, n).
+
+solution: 
+
+这题如果使用O(n)算法会超时，所以可以使用分治
+如果 n 为偶数： 可以转化为 Pow(x,n/2) * Pow(x,n/2)
+如果 n 为奇数： 可以转化为 Pow(x,n/2) * Pow(x,n/2) * x
+
+```java
+public class Solution {
+    public double Pow(double x, int n) {
+        if(n == 1)
+            return x;
+        double half = Pow(x, n>>>1);
+        if(n % 2 == 0)
+            return half * half;
+        else
+            return half * half * x;
+    }
+    public double myPow(double x, int n) {
+        double result = 1;
+        int num;
+        if(n == 1)
+            return x;
+        if(n == 0)
+            return 1;
+        
+        if(n < 0)
+            return (double)1/Pow(x, -n);
+        else
+            return Pow(x, n);
     }
 }
 ```
