@@ -1,3 +1,32 @@
+## 412. Fizz Buzz
+
+Write a program that outputs the string representation of numbers from 1 to n.
+
+But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”. 
+For numbers which are multiples of both three and five output “FizzBuzz”.
+solution: 很简单
+```java
+public List<String> fizzBuzz(int n) {
+        List<String> result = new LinkedList<String>();
+        for(int i = 1; i <= n; i++){
+            if( (i % 3 == 0) && (i % 5 == 0) ){
+                result.add("FizzBuzz");
+            }
+            else if( i % 3 == 0){
+                result.add("Fizz");
+            }
+            else if( i % 5 == 0){
+                result.add("Buzz");
+            }
+            else{
+                result.add("" + i);
+            }
+        }
+        return result;
+    }
+```
+
+
 ##  58. Length of Last Word
 
 Given a string *s* consists of upper/lower-case alphabets and empty space characters `' '`, return the length of last word in the string.
