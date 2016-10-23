@@ -13,6 +13,8 @@ public int maxDepth(TreeNode root) {
   }
 }
 ```
+
+
 ## 226. Invert Binary Tree
 
 Invert a binary tree.
@@ -45,6 +47,33 @@ public TreeNode invertTree(TreeNode root) {
         final TreeNode right = root.right;
         root.left = invertTree(right);
         root.right = invertTree(left);
+        return root;
+    }
+```
+非递归版本
+
+```java
+public TreeNode invertTree(TreeNode root) {
+   
+        if (root == null) {
+            return null;
+        }
+        final Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+		//使用一个辅助队列
+        while(!queue.isEmpty()) {
+            final TreeNode node = queue.poll();
+            final TreeNode left = node.left;
+            node.left = node.right;
+            node.right = left;
+
+            if(node.left != null) {
+                queue.offer(node.left);
+            }
+            if(node.right != null) {
+                queue.offer(node.right);
+            }
+        }
         return root;
     }
 ```
