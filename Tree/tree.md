@@ -99,3 +99,38 @@ public boolean isSameTree(TreeNode p, TreeNode q) {
     return false;
 }
 ```
+
+## 404. Sum of Left Leaves
+Find the sum of all left leaves in a given binary tree.
+
+**Example:**
+
+```
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+There are two left leaves in the binary tree, with values 9 and 15 respectively. Return 24.
+```
+solution：
+要熟练使用递归
+```java
+public int sumOfLeftLeaves(TreeNode root) {
+    if(root == null)
+      return 0;
+    int sum = 0;
+    if(root.left != null){ //如果左子树不为空
+      if(root.left.right == null && root.left.left == null){ //这个节点为叶子节点
+        sum += root.left.val;
+      }else{
+        sum += sumOfLeftLeaves(root.left);//递归处理左子树
+      }
+    }
+    if(root.right != null){
+      sum += sumOfLeftLeaves(root.right);//递归处理右子树
+    }
+    return sum;
+}
+```
