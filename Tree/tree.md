@@ -3,6 +3,8 @@ Given a binary tree, find its maximum depth.
 
 The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
+
+
 solution：用递归来做
 ```java
 public int maxDepth(TreeNode root) {
@@ -134,3 +136,21 @@ public int sumOfLeftLeaves(TreeNode root) {
     return sum;
 }
 ```
+## 94. Binary Tree Inorder Traversal
+
+
+Given a binary tree, return the *inorder* traversal of its nodes' values.
+
+For example:
+Given binary tree `[1,null,2,3]`,
+
+```
+   1
+    \
+     2
+    /
+   3
+
+```
+
+return `[1,3,2]`.
