@@ -136,6 +136,58 @@ public int sumOfLeftLeaves(TreeNode root) {
     return sum;
 }
 ```
+
+## 144. Binary Tree Preorder Traversal
+Given a binary tree, return the *preorder* traversal of its nodes' values.
+
+For example:
+Given binary tree `{1,#,2,3}`,
+
+```
+   1
+    \
+     2
+    /
+   3
+
+```
+
+return `[1,2,3]`.
+
+solution: 递归方法
+
+```java
+public List<Integer> preorderTraversal(TreeNode root) {
+    List<Integer> list = new ArrayList<Integer>();
+    if(root != null){
+        list.add(root.val);
+        list.addAll(preorderTraversal(root.left));
+        list.addAll(preorderTraversal(root.right));
+    }
+    return list;
+}
+```
+遍历方法：
+
+```java
+public List<Integer> preorderTraversal(TreeNode root) { //中序遍历
+    List<Integer> list = new ArrayList<Integer>();
+    Stack<TreeNode> stack = new Stack<TreeNode>();
+    if(root != null){
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            list.add(node.val);     //处理结点
+            if(node.right != null)  // 把右子树加入栈
+                stack.push(node.right);
+            if(node.left != null)  
+                stack.push(node.left);
+        }
+    }
+    return list;
+}
+```
+
 ## 94. Binary Tree Inorder Traversal
 
 
@@ -155,10 +207,51 @@ Given binary tree `[1,null,2,3]`,
 
 return `[1,3,2]`.
 
+solution：
+
+递归：
 
 
-## 144. Binary Tree Preorder Traversal
-Given a binary tree, return the *preorder* traversal of its nodes' values.
+
+```java
+public List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> list = new ArrayList<Integer>();
+    helper(list, root);
+    return list;
+}
+
+public void helper(List<Integer> list, TreeNode root){
+    if(root != null){
+        helper(list,root.left);
+      	list.add(root.val);
+        helper(list,root.right); 
+    }
+}
+```
+遍历：
+
+```java
+public List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> list = new ArrayList<Integer>();
+    Stack<TreeNode> stack = new Stack<TreeNode>();
+    TreeNode node = root;
+    while(node != null || !stack.isEmpty()){
+      while(node != null){
+        stack.push(node);
+        node = node.left;
+      }
+      if(!stack.isEmpty()){
+        node = stack.pop();
+        list.add(node.val);
+        node = node.right;
+      }
+    }
+    return list;
+}
+```
+
+##　145. Binary Tree Postorder Traversal
+Given a binary tree, return the *postorder* traversal of its nodes' values.
 
 For example:
 Given binary tree `{1,#,2,3}`,
@@ -172,4 +265,56 @@ Given binary tree `{1,#,2,3}`,
 
 ```
 
-return `[1,2,3]`.
+return `[3,2,1]`.
+
+solution：递归
+
+
+
+```java
+public List<Integer> postorderTraversal(TreeNode root) {
+    List<Integer> list = new ArrayList<Integer>();
+    helper(list, root);
+    return list;
+}
+
+public void helper(List<Integer> list, TreeNode root){  //辅助函数，用于输出list数据
+    if(root != null){
+        helper(list,root.left);
+        helper(list,root.right);
+        list.add(root.val);   //后序遍历
+    }
+}
+```
+遍历：
+
+
+
+```java
+public List<Integer> postorderTraversal(TreeNode root) {
+    List<Integer> list = new ArrayList<Integer>();
+    Stack<TreeNode> stack = new Stack<TreeNode>();
+    TreeNode node = root;
+    TreeNode pre = null; //pre表示最近出栈的节点，用于判断是否
+                         //是node节点的右孩子，如果是的话，
+                         //就可以访问node结点
+    while(node != null || !stack.isEmpty()){
+        while(node != null ){   //将栈顶结点的左孩子相继入栈
+            stack.push(node);
+            node = node.left;
+        }
+        if(!stack.isEmpty()){
+            node = stack.peek();
+            if(node.right != null && node.right != pre){  //
+                node = node.right;
+            }else{
+                node = stack.pop();
+                list.add(node.val);
+                pre = node;
+                node = null;
+            }
+        }  
+    }
+    return list;
+}
+```
