@@ -56,24 +56,20 @@ public TreeNode invertTree(TreeNode root) {
 
 ```java
 public TreeNode invertTree(TreeNode root) {
-   
-        if (root == null) {
-            return null;
-        }
-        final Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-		//使用一个辅助队列
-        while(!queue.isEmpty()) {
-            final TreeNode node = queue.poll();
-            final TreeNode left = node.left;
-            node.left = node.right;
-            node.right = left;
-
-            if(node.left != null) {
-                queue.offer(node.left);
-            }
-            if(node.right != null) {
-                queue.offer(node.right);
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        if(root!= null){
+            queue.offer(root);
+            while(!queue.isEmpty()){   //使用层序遍历 
+                TreeNode node = queue.poll();
+                if(node.left != null){
+                    queue.offer(node.left);
+                }
+                if(node.right != null){
+                    queue.offer(node.right);
+                }
+                TreeNode tmp = node.left;   //交换左右子树
+                node.left = node.right;
+                node.right = tmp;
             }
         }
         return root;
