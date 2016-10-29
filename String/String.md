@@ -91,4 +91,39 @@ Returns the index of the first occurrence of needle in haystack, or -1 if needle
             return -1;
     }
 
+## 344. Reverse String
+
+Write a function that takes a string as input and returns the string reversed.
+
+**Example:**
+Given s = "hello", return "olleh".
+
+solution: 使用递归的解法
+
+```java
+public String reverseString(String s) {
+        if(s == null || s.length() < 2)
+            return s;
+        return reverseString(s.substring(1)) + s.charAt(0);
+    }
+```
+
+普通解法
+
+```java
+public String reverseString(String s) {
+  	char[] c = s.toCharArray();
+  	int i = 0;
+  	int j = s.length() - 1;
+  	char tmp;
+  	while(i < j){
+      	tmp = c[i];
+      	c[i] = c[j];
+      	c[j] = tmp;
+      	i++;
+      	j--;
+  	}
+  	return new String(c);
+}
+```
 
