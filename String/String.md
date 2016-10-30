@@ -126,4 +126,47 @@ public String reverseString(String s) {
   	return new String(c);
 }
 ```
+## 415. Add Strings
+Given two non-negative numbers `num1` and `num2` represented as string, return the sum of `num1` and `num2`.
 
+**Note:**
+
+1. The length of both `num1` and `num2` is < 5100.
+2. Both `num1` and `num2` contains only digits `0-9`.
+3. Both `num1` and `num2` does not contain any leading zero.
+4. You **must not use any built-in BigInteger library** or **convert the inputs to integer** directly.
+
+solution:
+
+
+
+```java
+public String addStrings(String num1, String num2) {
+    char[] n1 = num1.toCharArray();
+    char[] n2 = num2.toCharArray();
+    int i = n1.length - 1;
+    int j = n2.length - 1;
+    StringBuilder sb = new StringBuilder();
+    int sum = 0, carry = 0;
+    while(i>=0 || j >=0){
+        int first =  i >= 0 ? n1[i] - '0' : 0;
+        int second = j >= 0 ? n2[j] - '0' : 0;
+        sum = first + second + carry;
+        if(sum < 10){   //如果没有进位
+            sb.insert(0,sum);
+            carry = 0;
+            sum = 0;
+        }
+        if(sum >= 10){  //进位
+            sb.insert(0,sum-10); //在首位置 插入数字
+            carry = 1;  //设置进位
+            sum = 0;
+        }
+        i--;
+        j--;
+    }
+    if(carry == 1)  //如果最后还有进位 ，则在首位加1
+        sb.insert(0,"1");
+    return sb.toString();
+}
+```
