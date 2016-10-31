@@ -331,3 +331,39 @@ public int minDepth(TreeNode root) {
     return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
 }
 ```
+## 110. Balanced Binary Tree
+
+Given a binary tree, determine if it is height-balanced.
+
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of *every* node never differ by more than 1.
+
+solution：该算法需要O(N)的时间，O(H)的空间， H为树的高度。
+
+```java
+public class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if(root == null)
+            return true;
+        if(checkHeight(root) == -1)
+            return false;
+        else
+            return true;
+    }
+    
+    public int checkHeight(TreeNode root) {
+        if(root == null)
+            return 0;
+        int leftHight = checkHeight(root.left); //检查左子树是否平衡
+        if(leftHight == -1)
+            return -1;
+        int rightHight = checkHeight(root.right);//检查右子树是否平衡
+        if(rightHight == -1)
+            return -1;
+        int diff = leftHight - rightHight;
+        if(Math.abs(diff) > 1) //检查当前结点是否平衡
+            return -1; //不平衡
+        else//返回高度
+            return Math.max(checkHeight(root.left), checkHeight(root.right)) + 1;
+    }
+}
+```
