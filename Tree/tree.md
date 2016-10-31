@@ -407,3 +407,52 @@ public boolean isMirror(TreeNode p, TreeNode q) {
     return (p.val==q.val) && isMirror(p.left,q.right) && isMirror(p.right,q.left);
 }
 ```
+##  102. Binary Tree Level Order Traversal
+
+Given a binary tree, return the *level order* traversal of its nodes' values. (ie, from left to right, level by level).
+
+For example:
+Given binary tree `[3,9,20,null,null,15,7]`,
+
+```
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+```
+
+return its level order traversal as:
+
+```
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+```
+solution：主要是考虑输出的格式，
+```java
+public List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> result = new ArrayList<>();
+    Queue<TreeNode> queue = new LinkedList<>();  
+    if(root == null)
+        return result;
+    queue.offer(root);
+    while(!queue.isEmpty()){
+        int nodeNum = queue.size(); //记录当前层 结点的个数
+        List<Integer> subList= new ArrayList<>();
+        for(int i = 0; i < nodeNum; i++){
+            TreeNode node = queue.poll();
+            if(node.left != null)
+                queue.offer(node.left);
+            if(node.right != null)
+                queue.offer(node.right);
+            subList.add(node.val);    
+        }
+        result.add(subList);
+    }
+    return result;
+}
+```
