@@ -506,3 +506,52 @@ public List<List<Integer>> levelOrderBottom(TreeNode root) {
     }
 ```
 
+## 112. Path Sum
+
+Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+
+For example:
+
+Given the below binary tree and 
+
+```
+sum = 22
+```
+
+,
+
+```
+              5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \      \
+        7    2      1
+
+```
+
+return true, as there exist a root-to-leaf path `5->4->11->2` which sum is 22.
+solution:
+
+本题所需要做的是找到一条从根节点到叶子节点的路径，因此我们需要去枚举每一条路径的和，看其值是否等于目标值。
+
+直接才用遍历的方法，用一个参数表示从根节点到当前节点的权值之和。
+
+当遍历到一个节点时：
+
+- 若该节点为空：返回False。
+- 若该节点为叶子节点：判断当前权值和是否等于目标值。
+- 若该节点不为叶子节点：递归处理其左右子树。
+
+递归处理整个二叉树，就能够判定出结果。
+
+```java
+public boolean hasPathSum(TreeNode root, int sum) {
+        if(root == null)
+            return false;
+        if(root.left == null && root.right == null && sum - root.val == 0)
+            return true;
+        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+    }
+```
