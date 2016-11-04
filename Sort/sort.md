@@ -16,3 +16,19 @@ public static void insertSort(int[] nums) {
 	}
 ```
 
+冒泡排序：
+
+```java
+public static void bubbleSort(int[] nums) {
+  	for(int i = 1; i < nums.length; i++) {
+      	for(int j = 0; j < nums.length - 1; j++) {
+          	if(nums[i] < nums[j]) {
+              	int temp = nums[j];
+              	nums[j] = nums[i];
+              	nums[i] = temp;
+          	}
+      	}
+  	}
+}
+```
+
